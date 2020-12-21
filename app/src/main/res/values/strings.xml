@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">ProjetoCM</string>
+    <string-array name="json_options">
+        <item>meal name</item>
+        <item>meal id</item>
+        <item>list categories</item>
+        <item>list area</item>
+        <item>list ingredients</item>
+        <item>filter ingredient</item>
+        <item>filter category</item>
+        <item>filter area</item>
+    </string-array>
 </resources>
