@@ -1,6 +1,9 @@
 package com.example.projetocm;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.DownloadManager;
@@ -11,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import androidx.appcompat.widget.Toolbar;
 
 
 import org.json.JSONObject;
@@ -27,11 +31,18 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FirstFragment.FirstFragmentInteractionListener {
 
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.main_activity);
+
+
 
         FirstFragment firstFragment = FirstFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -48,4 +59,12 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Fir
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

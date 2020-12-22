@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_random"
+            android:title="Random Recipe" />
+        <item
+            android:id="@+id/nav_pref"
+            android:title="Preferences" />
+        <item
+            android:id="@+id/nav_past"
+            android:title="Past Meals" />
+    </group>
+    <item android:title="Search">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_search_name"
+                    android:title="Search recipe by name" />
+                <item
+                    android:id="@+id/nav_search_cat"
+                    android:title="Search recipe by category" />
+                <item
+                    android:id="@+id/nav_search_ing"
+                    android:title="Search recipe by ingredient" />
+                <item
+                    android:id="@+id/nav_search_zone"
+                    android:title="Search recipe by zone" />
+            </group>
+        </menu>
+    </item>
+
+
+</menu>
