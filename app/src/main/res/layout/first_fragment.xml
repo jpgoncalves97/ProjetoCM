@@ -8,40 +8,54 @@
     android:id = "@+id/first_fragment">
 
 
-    <ImageView
-        android:id="@+id/foodpic"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.327"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
         android:id="@+id/mealname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/foodpic"
+        android:fontFamily="@font/muli"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#353535"
+        android:textSize="30sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.744" />
+
+    <com.bosphere.fadingedgelayout.FadingEdgeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="200dp"
+        app:fel_edge="bottom"
+        >
+
+        <ImageView
+            android:id="@+id/foodpic"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </com.bosphere.fadingedgelayout.FadingEdgeLayout>
+
 
     <ImageButton
         android:id="@+id/acceptButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@color/white"
         android:scaleType="fitCenter"
         android:src="@drawable/accept"
-        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.948"
@@ -51,12 +65,12 @@
 
     <ImageButton
         android:id="@+id/rejectButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginTop="189dp"
+        android:background="@color/white"
         android:scaleType="fitCenter"
         android:src="@drawable/reject"
-        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.051"
