@@ -1,7 +1,6 @@
 package com.example.projetocm;
 
 import android.content.Context;
-import android.content.SyncStats;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -13,11 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +21,10 @@ import java.io.InputStream;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FirstFragment#newInstance} factory method to
+ * Use the {@link RandomMeal#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FirstFragment extends Fragment {
+public class RandomMeal extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,8 +43,8 @@ public class FirstFragment extends Fragment {
 
 
     // TODO: Rename and change types and number of parameters
-    public static FirstFragment newInstance(){
-        FirstFragment fragment = new FirstFragment();
+    public static RandomMeal newInstance(){
+        RandomMeal fragment = new RandomMeal();
         Bundle args = new Bundle();
         //#args.putString(ARG_PARAM1, param1);
         //args.putString(ARG_PARAM2, param2);
@@ -72,7 +68,7 @@ public class FirstFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.first_fragment, container, false);
+        View view = inflater.inflate(R.layout.random_meal, container, false);
 
         ImageView image = view.findViewById(R.id.foodpic);
         ImageButton reject = view.findViewById(R.id.rejectButton);
