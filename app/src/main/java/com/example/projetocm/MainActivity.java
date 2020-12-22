@@ -1,35 +1,16 @@
 package com.example.projetocm;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.DownloadManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
+
 import androidx.appcompat.widget.Toolbar;
 
 
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-
-
-public class MainActivity extends AppCompatActivity implements FirstFragment.FirstFragmentInteractionListener, SecondFragment.SecondFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements RandomMeal.FirstFragmentInteractionListener, QuickAccess.SecondFragmentInteractionListener {
 
     private DrawerLayout drawer;
 
@@ -44,9 +25,9 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Fir
 
 
 
-        FirstFragment firstFragment = FirstFragment.newInstance();
+        RandomMeal randomMeal = RandomMeal.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_activity, firstFragment, "fragOne");
+        fragmentTransaction.replace(R.id.main_activity, randomMeal, "fragOne");
         fragmentTransaction.commit();
 
     }
@@ -54,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Fir
 
     @Override
     public void FirstFragmentInteraction(Meal meal) {
-        SecondFragment fragmentTwo = SecondFragment.newInstance(meal);
+        QuickAccess fragmentTwo = QuickAccess.newInstance(meal);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_activity , fragmentTwo, "fragTwo");
         fragmentTransaction.addToBackStack("Top");
@@ -62,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Fir
     }
 
     public void SecondFragmentInteraction() {
-        FirstFragment fragmentOne = (FirstFragment) getSupportFragmentManager().findFragmentByTag("fragOne");
+        RandomMeal fragmentOne = (RandomMeal) getSupportFragmentManager().findFragmentByTag("fragOne");
         getSupportFragmentManager().popBackStack();
     }
 
