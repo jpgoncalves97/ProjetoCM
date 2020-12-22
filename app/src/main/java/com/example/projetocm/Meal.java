@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Meal {
 
-    private String id, name, category, area, instructions, image, tag, youtube, source, ingredients, measurements;
+    public String id, name, category, area, instructions, image, tag, youtube, source, ingredients, measurements;
 
     Meal(JSONObject json){
         try {
