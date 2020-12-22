@@ -21,10 +21,10 @@ import java.io.InputStream;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SecondFragment#newInstance} factory method to
+ * Use the {@link QuickAccess#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SecondFragment extends Fragment {
+public class QuickAccess extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,15 +35,15 @@ public class SecondFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private SecondFragment.SecondFragmentInteractionListener mListener;
+    private QuickAccess.SecondFragmentInteractionListener mListener;
 
-    public SecondFragment() {
+    public QuickAccess() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static SecondFragment newInstance(Meal meal) {
-        SecondFragment fragment = new SecondFragment();
+    public static QuickAccess newInstance(Meal meal) {
+        QuickAccess fragment = new QuickAccess();
         Bundle args = new Bundle();
         args.putString(mealName, meal.name);
         args.putString(mealImage, meal.image);
@@ -65,7 +65,7 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_second, container, false);
+        View view = inflater.inflate(R.layout.quick_access, container, false);
 
         ImageView image = view.findViewById(R.id.foodpic);
         ImageButton web = view.findViewById(R.id.webButton);
@@ -101,11 +101,11 @@ public class SecondFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof SecondFragment.SecondFragmentInteractionListener) {
+        if (context instanceof QuickAccess.SecondFragmentInteractionListener) {
             // This will initialize the variable. It will return an exception if it is not
             //  implemented in the java code of the variable context (in our case the
             //  context is the MainActivity.
-            mListener = (SecondFragment.SecondFragmentInteractionListener) context;
+            mListener = (QuickAccess.SecondFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
