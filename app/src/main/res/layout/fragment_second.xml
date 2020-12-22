@@ -20,6 +20,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scaleType="centerCrop"
+            android:alpha=".25"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -32,12 +33,12 @@
 
 
     <ImageButton
-        android:id="@+id/acceptButton"
+        android:id="@+id/videoButton"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
-        android:src="@drawable/accept"
+        android:src="@drawable/video"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.948"
@@ -46,13 +47,13 @@
         app:layout_constraintVertical_bias="0.952" />
 
     <ImageButton
-        android:id="@+id/rejectButton"
+        android:id="@+id/webButton"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="189dp"
         android:background="#00000000"
         android:scaleType="fitCenter"
-        android:src="@drawable/reject"
+        android:src="@drawable/web"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.051"
