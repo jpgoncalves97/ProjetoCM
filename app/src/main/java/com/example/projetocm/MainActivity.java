@@ -29,7 +29,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements FirstFragment.FirstFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements FirstFragment.FirstFragmentInteractionListener, SecondFragment.SecondFragmentInteractionListener {
 
     private DrawerLayout drawer;
 
@@ -53,10 +53,17 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Fir
 
 
     @Override
-    public void FirstFragmentInteraction() {
+    public void FirstFragmentInteraction(Meal meal) {
+        SecondFragment fragmentTwo = SecondFragment.newInstance(meal);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_activity , fragmentTwo, "fragTwo");
         fragmentTransaction.addToBackStack("Top");
         fragmentTransaction.commit();
+    }
+
+    public void SecondFragmentInteraction() {
+        FirstFragment fragmentOne = (FirstFragment) getSupportFragmentManager().findFragmentByTag("fragOne");
+        getSupportFragmentManager().popBackStack();
     }
 
     @Override

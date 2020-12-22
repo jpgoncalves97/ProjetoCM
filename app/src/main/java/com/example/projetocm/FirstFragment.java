@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 
@@ -43,11 +44,7 @@ public class FirstFragment extends Fragment {
     private LayoutInflater objLayoutInflater;
     private Meal[] meal;
 
-    public FirstFragment() {
-        // Required empty public constructor
 
-
-    }
 
     // TODO: Rename and change types and number of parameters
     public static FirstFragment newInstance(){
@@ -100,8 +97,20 @@ public class FirstFragment extends Fragment {
             }
         });
 
+        image.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+            public void onSwipeLeft() {
+                Toast.makeText(getContext(), "left", Toast.LENGTH_SHORT).show();
+                System.out.println(meal[0].name);
+                mListener.FirstFragmentInteraction(meal[0]);
+            }
+        });
+
 
         return view;
+    }
+
+    public interface OnTaskCompleted{
+        void onTaskCompleted(Meal[] from_async);
     }
 
     @Override
@@ -125,45 +134,45 @@ public class FirstFragment extends Fragment {
 
 
     public interface FirstFragmentInteractionListener {
-        void FirstFragmentInteraction();
+        void FirstFragmentInteraction(Meal meal);
     }
 
-}
-
-class randomMeal extends AsyncTask<String, Void, Meal[]> {
-    Meal[] meal;
-    ImageView image;
-    TextView title;
+    class randomMeal extends AsyncTask<String, Void, Meal[]> {
+        ImageView image;
+        TextView title;
 
 
-    public randomMeal(Meal[] meal, ImageView image, TextView title) {
-        this.meal = meal;
-        this.image = image;
-        this.title = title;
-    }
+        public randomMeal(Meal[] meal, ImageView image, TextView title) {
+            this.image = image;
+            this.title = title;
+        }
 
-    @Override
-    protected Meal[] doInBackground(String... args) {
-        try {
+        @Override
+        protected Meal[] doInBackground(String... args) {
+            try {
                 Meal[] meals = API.randomMeal();
                 return meals;
             } catch (NullPointerException e){
-            System.out.println("Cant find in API");
+                System.out.println("Cant find in API");
+            }
+            return null;
         }
-        return null;
+
+        @Override
+        protected void onPostExecute(Meal[] result) {
+            //do stuff
+            //how to return a value to the calling method
+            meal = result;
+            title.setText(meal[0].name);
+            new DownloadImageTask(image)
+                    .execute(meal[0].image);
+            System.out.println(meal[0].id);
+        }
     }
 
-    @Override
-    protected void onPostExecute(Meal[] result) {
-        //do stuff
-        //how to return a value to the calling method
-        meal = result;
-        title.setText(meal[0].name);
-        new DownloadImageTask(image)
-                .execute(meal[0].image);
-        System.out.println(meal[0].id);
-    }
 }
+
+
 
 class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
