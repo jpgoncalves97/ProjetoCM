@@ -54,6 +54,14 @@ public class API {
         return null;
     }
 
+    public static Meal[] randomMeal(){
+        JSONArray response = request("https://www.themealdb.com/api/json/v1/1/random.php");
+        if (response != null){
+            return mealArray(response);
+        }
+        return null;
+    }
+
     public static Meal searchMealById(String id){
         JSONArray response = request("https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + id);
         if (response != null){

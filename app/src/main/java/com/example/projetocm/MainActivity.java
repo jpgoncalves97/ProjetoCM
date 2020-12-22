@@ -1,6 +1,7 @@
 package com.example.projetocm;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.DownloadManager;
 import android.os.AsyncTask;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 
@@ -23,30 +25,42 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FirstFragment.FirstFragmentInteractionListener{
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirstFragment firstFragment = FirstFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_activity, firstFragment, "fragOne");
+        fragmentTransaction.commit();
+
     }
 
+
+
+    @Override
+    public void FirstFragmentInteraction() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.addToBackStack("Top");
+        fragmentTransaction.commit();
+    }
+
+    /*
     public void randomMeal(View view2) {
         View view = findViewById(android.R.id.content).getRootView();
         Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
         String cmd = spinner.getSelectedItem().toString();
         String text = ((EditText)findViewById(R.id.editText)).getText().toString();
-        /* exemplos:
-        name: Arrabiata
-        id = 52772
-        filter ingredient = chicken_breast
-        filter category = vegetarian
-        filter area = italian
-        */
+
         new Task().execute(cmd, text);
     }
+    */
 }
-
+/*
 class Task extends AsyncTask<String, Void, Void> {
 
     @Override
@@ -108,3 +122,4 @@ class Task extends AsyncTask<String, Void, Void> {
         return null;
     }
 }
+*/
