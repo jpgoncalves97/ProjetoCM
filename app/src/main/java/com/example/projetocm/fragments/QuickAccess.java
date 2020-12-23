@@ -1,4 +1,4 @@
-package com.example.projetocm;
+package com.example.projetocm.fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,6 +16,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.projetocm.OnSwipeTouchListener;
+import com.example.projetocm.R;
+import com.example.projetocm.data.Meal;
 
 import java.io.InputStream;
 
@@ -73,7 +77,7 @@ public class QuickAccess extends Fragment {
 
         TextView title = view.findViewById(R.id.mealname);
         title.setText(mParam1);
-        new DownloadImageTask(image).execute(mParam2);
+        //new RandomMeal.DownloadImageTask(image).execute(mParam2);
 
 
         web.setOnClickListener(new View.OnClickListener() {
@@ -122,31 +126,32 @@ public class QuickAccess extends Fragment {
         void SecondFragmentInteraction();
     }
 
+    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
 
-}
-class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
-
-    public DownloadImage(ImageView bmImage) {
-        this.bmImage = bmImage;
-    }
-
-    protected Bitmap doInBackground(String... urls) {
-        String urldisplay = urls[0];
-        Bitmap mIcon11 = null;
-        try {
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
+        public DownloadImage(ImageView bmImage) {
+            this.bmImage = bmImage;
         }
-        return mIcon11;
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
-    protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
-    }
 }
+
 
 

@@ -1,16 +1,16 @@
-package com.example.projetocm;
+package com.example.projetocm.data;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Category {
+public class Area {
 
-    String category;
+    String area;
     boolean included;
 
-    Category(JSONObject json){
+    public Area(JSONObject json){
         try {
-            this.category = json.getString("strCategory");
+            this.area = json.getString("strArea");
             this.included = true;
         } catch (JSONException e){
             System.out.println(e);
@@ -18,7 +18,7 @@ public class Category {
     }
 
     public void print(){
-        System.out.println("Category: " + this.category);
+        System.out.println("Area: " + this.area);
         System.out.println("Included: " + this.included);
     }
 

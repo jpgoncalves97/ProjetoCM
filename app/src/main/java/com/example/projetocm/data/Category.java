@@ -1,18 +1,16 @@
-package com.example.projetocm;
+package com.example.projetocm.data;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Ingredient {
+public class Category {
 
-    String id;
-    String ingredient;
+    String category;
     boolean included;
 
-    Ingredient(JSONObject json){
+    public Category(JSONObject json){
         try {
-            this.id = json.getString("idIngredient");
-            this.ingredient = json.getString("strIngredient");
+            this.category = json.getString("strCategory");
             this.included = true;
         } catch (JSONException e){
             System.out.println(e);
@@ -20,7 +18,7 @@ public class Ingredient {
     }
 
     public void print(){
-        System.out.println("Ingredient: " + this.ingredient);
+        System.out.println("Category: " + this.category);
         System.out.println("Included: " + this.included);
     }
 

@@ -1,6 +1,9 @@
 package com.example.projetocm;
 
-import android.os.AsyncTask;
+import com.example.projetocm.data.Meal;
+import com.example.projetocm.data.Area;
+import com.example.projetocm.data.Category;
+import com.example.projetocm.data.Ingredient;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.example.projetocm;
+package com.example.projetocm.data;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,7 +9,7 @@ public class Meal {
 
     public String id, name, category, area, instructions, image, tag, youtube, source, ingredients, measurements;
 
-    Meal(JSONObject json){
+    public Meal(JSONObject json){
         try {
             id = json.getString("idMeal");
             name = json.getString("strMeal");
@@ -67,4 +67,91 @@ public class Meal {
         System.out.println("measurements: " + measurements);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public String getYoutube() {
+        return youtube;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public String getMeasurements() {
+        return measurements;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public void setYoutube(String youtube) {
+        this.youtube = youtube;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setMeasurements(String measurements) {
+        this.measurements = measurements;
+    }
 }
