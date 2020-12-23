@@ -104,7 +104,8 @@ public class RandomMeal extends Fragment {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new randomMeal(image, title,1).execute();
+
+                mListener.FirstFragmentInteraction(meal[0],1);
             }
         });
 
@@ -112,7 +113,7 @@ public class RandomMeal extends Fragment {
             public void onSwipeLeft() {
                 Toast.makeText(getContext(), "left", Toast.LENGTH_SHORT).show();
                 System.out.println(meal[0].name);
-                mListener.FirstFragmentInteraction(meal[0]);
+                mListener.FirstFragmentInteraction(meal[0],0);
             }
         });
 
@@ -145,7 +146,7 @@ public class RandomMeal extends Fragment {
 
 
     public interface FirstFragmentInteractionListener {
-        void FirstFragmentInteraction(Meal meal);
+        void FirstFragmentInteraction(Meal meal,int status);
     }
 
     class randomMeal extends AsyncTask<String, Void, Meal[]> {
