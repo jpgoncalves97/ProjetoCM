@@ -12,4 +12,7 @@
         <item>filter category</item>
         <item>filter area</item>
     </string-array>
+    <string name="searchMealHint">Type your search here</string>
+    <string name="navigation_drawer_open">Drawer Open</string>
+    <string name="navigation_drawer_close">Drawer Closed</string>
 </resources>

@@ -1,15 +1,11 @@
 package com.example.projetocm;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,34 +14,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.InputStream;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RandomMeal#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class RandomMeal extends Fragment {
+public class SearchResults extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private FirstFragmentInteractionListener mListener;
     private LayoutInflater objLayoutInflater;
     private Meal[] meal;
 
-
-
     // TODO: Rename and change types and number of parameters
-    public static RandomMeal newInstance(){
-        RandomMeal fragment = new RandomMeal();
+    public static SearchResults newInstance(){
+        SearchResults fragment = new SearchResults();
         Bundle args = new Bundle();
         //#args.putString(ARG_PARAM1, param1);
         //args.putString(ARG_PARAM2, param2);
@@ -69,7 +53,7 @@ public class RandomMeal extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.random_meal, container, false);
+        View view = inflater.inflate(R.layout.meal_search, container, false);
 
         ImageView image = view.findViewById(R.id.foodpic);
         ImageButton reject = view.findViewById(R.id.rejectButton);
@@ -101,6 +85,7 @@ public class RandomMeal extends Fragment {
                 mListener.FirstFragmentInteraction(meal[0]);
             }
         });
+
 
         return view;
     }
@@ -166,30 +151,4 @@ public class RandomMeal extends Fragment {
         }
     }
 
-}
-
-
-class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
-
-    public DownloadImageTask(ImageView bmImage) {
-        this.bmImage = bmImage;
-    }
-
-    protected Bitmap doInBackground(String... urls) {
-        String urldisplay = urls[0];
-        Bitmap mIcon11 = null;
-        try {
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
-        }
-        return mIcon11;
-    }
-
-    protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
-    }
 }
