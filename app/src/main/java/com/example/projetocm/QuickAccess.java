@@ -1,8 +1,10 @@
 package com.example.projetocm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -30,11 +32,15 @@ public class QuickAccess extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String mealName = "param1";
     private static final String mealImage = "param2";
+    private static final String mealWeb = "param3";
+    private static final String mealVideo = "param4";
     private static final Meal meal_access = null;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String mParam3;
+    private String mParam4;
     private QuickAccess.SecondFragmentInteractionListener mListener;
 
     public QuickAccess() {
@@ -47,6 +53,8 @@ public class QuickAccess extends Fragment {
         Bundle args = new Bundle();
         args.putString(mealName, meal.name);
         args.putString(mealImage, meal.image);
+        args.putString(mealWeb, meal.source);
+        args.putString(mealVideo, meal.youtube);
 
         fragment.setArguments(args);
         return fragment;
@@ -58,6 +66,8 @@ public class QuickAccess extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(mealName);
             mParam2 = getArguments().getString(mealImage);
+            mParam3 = getArguments().getString(mealWeb);
+            mParam4 = getArguments().getString(mealVideo);
         }
     }
 
@@ -79,11 +89,17 @@ public class QuickAccess extends Fragment {
         web.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Uri uri = Uri.parse(mParam3); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Uri uri = Uri.parse(mParam4); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
 

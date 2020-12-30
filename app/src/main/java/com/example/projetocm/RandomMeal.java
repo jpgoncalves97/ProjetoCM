@@ -1,6 +1,8 @@
 package com.example.projetocm;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -34,11 +36,13 @@ public class RandomMeal extends Fragment {
 
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private Boolean mParam1;
     private String mParam2;
     private FirstFragmentInteractionListener mListener;
     private LayoutInflater objLayoutInflater;
     private Meal[] meal;
+    private ImageView image;
+    private TextView title;
 
 
 
@@ -46,7 +50,7 @@ public class RandomMeal extends Fragment {
     public static RandomMeal newInstance(){
         RandomMeal fragment = new RandomMeal();
         Bundle args = new Bundle();
-        //#args.putString(ARG_PARAM1, param1);
+        //args.putBoolean(ARG_PARAM1, fetchNew);
         //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -58,8 +62,7 @@ public class RandomMeal extends Fragment {
         objLayoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getBoolean(ARG_PARAM1);
         }
     }
 
@@ -70,20 +73,27 @@ public class RandomMeal extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.random_meal, container, false);
 
-        ImageView image = view.findViewById(R.id.foodpic);
+        image = view.findViewById(R.id.foodpic);
         ImageButton reject = view.findViewById(R.id.rejectButton);
         ImageButton accept = view.findViewById(R.id.acceptButton);
 
-        TextView title = view.findViewById(R.id.mealname);
+        title = view.findViewById(R.id.mealname);
 
+        if (meal != null) {
+            new DownloadImageTask(image)
+                    .execute(meal[0].image);
+            title.setText(meal[0].name);
+        }
+        else{
+            new randomMeal(meal, image, title).execute();
+        }
 
-        new randomMeal(meal, image, title).execute();
 
 
         reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new randomMeal(meal, image, title).execute();
+                show_reject_dialog();
             }
         });
         accept.setOnClickListener(new View.OnClickListener() {
@@ -104,9 +114,49 @@ public class RandomMeal extends Fragment {
 
         return view;
     }
+    public void show_reject_dialog(){
 
-    public interface OnTaskCompleted{
-        void onTaskCompleted(Meal[] from_async);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Select a reason")
+
+                .setSingleChoiceItems(R.array.choices, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+
+                })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
+                        Toast.makeText(getContext(),"selectedPosition: " + selectedPosition,Toast.LENGTH_SHORT).show();
+                        if (selectedPosition == 0){
+                            //Not right now - simply fetch new random meal
+                            new randomMeal(meal, image, title).execute();
+                        }
+                        else if(selectedPosition == 1){
+                            //Don't like it - fetch new random meal and modify database for displayed meal
+                            new randomMeal(meal, image, title).execute();
+                        }
+                        else if(selectedPosition == 2){
+                            //Missing ingredients - Open schedule shopping screen
+
+                        }
+
+                    }
+                })
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // removes the dialog from the screen
+
+                    }
+                })
+
+                .show();
+
     }
 
     @Override
