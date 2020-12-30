@@ -56,7 +56,7 @@ public class API {
 
     public static Meal[] randomMeal(){
         JSONArray response = request("https://www.themealdb.com/api/json/v1/1/random.php");
-        if (response != null){
+        if (response != null){  
             return mealArray(response);
         }
         return null;
