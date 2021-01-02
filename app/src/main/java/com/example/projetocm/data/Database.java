@@ -212,5 +212,38 @@ public class Database extends SQLiteOpenHelper {
         db.delete(TABLE_NAMES[1], selection, selectionArgs);
     }
 
+    public ArrayList<String> search_name(String in, String Table_name){
+        ArrayList<String> res = new ArrayList<>();
+        String search_coll = "";
+        if(Table_name.equals(TABLE_NAMES[0]))
+            search_coll = "name";//meals
+        else if(Table_name.equals(TABLE_NAMES[1]))
+            search_coll = "ingredient";
+        else if(Table_name.equals(TABLE_NAMES[2]))
+            search_coll = "category";
+        else if(Table_name.equals(TABLE_NAMES[3]))
+            search_coll = "area";
+        else
+            return res;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(
+                Table_name,   // The table to query
+                null,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                  // don't filter by row groups
+                null              // The sort order
+        );
+        while(cursor.moveToNext()) {
+            String item = cursor.getString(cursor.getColumnIndexOrThrow(search_coll));
+            if(item.startsWith(in)){
+                res.add(item);
+            }
+        }
+        return res;
+    }
 
 }
