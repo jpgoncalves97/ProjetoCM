@@ -105,7 +105,6 @@ public class RandomMeal extends Fragment {
 
         image.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeLeft() {
-                Toast.makeText(getContext(), "left", Toast.LENGTH_SHORT).show();
                 System.out.println(meal[0].name);
                 mListener.FirstFragmentInteraction(meal[0]);
             }

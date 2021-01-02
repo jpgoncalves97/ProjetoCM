@@ -34,13 +34,20 @@ public class QuickAccess extends Fragment {
     private static final String mealImage = "param2";
     private static final String mealWeb = "param3";
     private static final String mealVideo = "param4";
+    private static final String mealArea = "param5";
+    private static final String mealCat = "param6";
+    private static final String mealIng = "param7";
     private static final Meal meal_access = null;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private String mParam3;
-    private String mParam4;
+    private String name;
+    private String imageLink;
+    private String webLink;
+    private String videoLink;
+    private String area;
+    private String category;
+    private String ingredients;
+
     private QuickAccess.SecondFragmentInteractionListener mListener;
 
     public QuickAccess() {
@@ -55,6 +62,9 @@ public class QuickAccess extends Fragment {
         args.putString(mealImage, meal.image);
         args.putString(mealWeb, meal.source);
         args.putString(mealVideo, meal.youtube);
+        args.putString(mealArea, meal.area);
+        args.putString(mealCat, meal.category);
+        args.putString(mealIng, meal.ingredients);
 
         fragment.setArguments(args);
         return fragment;
@@ -64,10 +74,13 @@ public class QuickAccess extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(mealName);
-            mParam2 = getArguments().getString(mealImage);
-            mParam3 = getArguments().getString(mealWeb);
-            mParam4 = getArguments().getString(mealVideo);
+            name = getArguments().getString(mealName);
+            imageLink = getArguments().getString(mealImage);
+            webLink = getArguments().getString(mealWeb);
+            videoLink = getArguments().getString(mealVideo);
+            area = "Origin: "+ getArguments().getString(mealArea);
+            category = "Category: " + getArguments().getString(mealCat);
+            ingredients = "Ingredients: " +"\n\n"+ getArguments().getString(mealIng);
         }
     }
 
@@ -82,14 +95,21 @@ public class QuickAccess extends Fragment {
         ImageButton video = view.findViewById(R.id.videoButton);
 
         TextView title = view.findViewById(R.id.mealname);
-        title.setText(mParam1);
-        new DownloadImageTask(image).execute(mParam2);
+        title.setText(name);
+        TextView tv_area = view.findViewById(R.id.tv_area);
+        tv_area.setText(area);
+        TextView tv_cat = view.findViewById(R.id.tv_cat);
+        tv_cat.setText(category);
+        TextView tv_ing = view.findViewById(R.id.tv_ing);
+        tv_ing.setText(ingredients);
+
+        new DownloadImageTask(image).execute(imageLink);
 
 
         web.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(mParam3); // missing 'http://' will cause crashed
+                Uri uri = Uri.parse(webLink); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
@@ -97,7 +117,7 @@ public class QuickAccess extends Fragment {
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(mParam4); // missing 'http://' will cause crashed
+                Uri uri = Uri.parse(videoLink); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
@@ -105,7 +125,6 @@ public class QuickAccess extends Fragment {
 
         image.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeRight() {
-                Toast.makeText(getContext(), "right", Toast.LENGTH_SHORT).show();
                 mListener.SecondFragmentInteraction();
             }
         });
