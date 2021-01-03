@@ -75,6 +75,8 @@ public class RandomMeal extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        new randomMeal(0).execute();
     }
 
     @Override
@@ -91,9 +93,6 @@ public class RandomMeal extends Fragment {
         title = view.findViewById(R.id.mealname);
 
 
-        new randomMeal(meal, image, title).execute();
-
-
         reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +107,7 @@ public class RandomMeal extends Fragment {
             }
         });
 
-        image.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+        view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeLeft() {
                 Toast.makeText(getContext(), "left", Toast.LENGTH_SHORT).show();
                 System.out.println(meal[0].name);
@@ -138,11 +137,11 @@ public class RandomMeal extends Fragment {
                         Toast.makeText(getContext(),"selectedPosition: " + selectedPosition,Toast.LENGTH_SHORT).show();
                         if (selectedPosition == 0){
                             //Not right now - simply fetch new random meal
-                            new randomMeal(meal, image, title).execute();
+                            new randomMeal(0).execute();
                         }
                         else if(selectedPosition == 1){
                             //Don't like it - fetch new random meal and modify database for displayed meal
-                            new randomMeal(meal, image, title).execute();
+                            new randomMeal(0).execute();
                         }
                         else if(selectedPosition == 2){
                             //Missing ingredients - Open schedule shopping screen
@@ -189,15 +188,11 @@ public class RandomMeal extends Fragment {
     }
 
     class randomMeal extends AsyncTask<String, Void, Meal[]> {
-        ImageView image;
-        TextView title;
-        int status;
 
+        int liked;
 
-        public randomMeal(ImageView image, TextView title, int status) {
-            this.image = image;
-            this.title = title;
-            this.status = status;
+        public randomMeal(int liked) {
+            this.liked = liked;
         }
 
         @Override
@@ -216,7 +211,7 @@ public class RandomMeal extends Fragment {
                     .execute(meal[0].image);
             System.out.println(meal[0].id);
 
-            dbhelper.add_meal(meal[0],status);
+            dbhelper.add_meal(meal[0],liked);
 
             dbhelper.check_meal_status(meal[0].id);
 

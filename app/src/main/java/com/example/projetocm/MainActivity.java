@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements
             QuickAccess quickAccess = QuickAccess.newInstance(meal);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
-            fragmentTransaction.replace(R.id.fragment_container, quickAccess, "fragTwo");
+            fragmentTransaction.add(R.id.fragment_container, quickAccess, "fragTwo");
             fragmentTransaction.addToBackStack("Top");
             fragmentTransaction.commit();
         }else if(status == 1){
