@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity implements
         RandomMeal.FirstFragmentInteractionListener,
         QuickAccess.SecondFragmentInteractionListener,
         NavigationView.OnNavigationItemSelectedListener,
-        Meal_Details.DetailFragmentListener{
+        Meal_Details.DetailFragmentListener,
+        shop_frag.shopfraglistener{
 
 
     private DrawerLayout drawer;
@@ -65,7 +66,13 @@ public class MainActivity extends AppCompatActivity implements
             Meal_Details fragment = Meal_Details.newInstance(meal);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment, "fragdetails");
-            //fragmentTransaction.addToBackStack("Top");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }else if (status == 2){
+            shop_frag fragment = shop_frag.newInstance(meal,dbHelper, MainActivity.this);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment, "fragshop");
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
     }
@@ -123,6 +130,11 @@ public class MainActivity extends AppCompatActivity implements
     public void SecondFragmentInteraction() {
         RandomMeal fragmentOne = (RandomMeal) getSupportFragmentManager().findFragmentByTag("fragOne");
         getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void shopfraginteraction() {
+
     }
 
     @Override

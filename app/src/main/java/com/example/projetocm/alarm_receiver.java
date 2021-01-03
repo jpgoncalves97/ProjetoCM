@@ -52,7 +52,7 @@ public class alarm_receiver extends BroadcastReceiver {
         }
     }
 
-    public static void setAlarm(Context context, int hours, int mins, int secs) {
+    public static void setAlarm(Context context,int year, int month, int day,int hours, int mins, int secs) {
         boolean alarmUp = (PendingIntent.getBroadcast(context, 0,
                 new Intent(context, alarm_receiver.class),
                 PendingIntent.FLAG_NO_CREATE) != null);
@@ -62,6 +62,9 @@ public class alarm_receiver extends BroadcastReceiver {
             calendar.set(Calendar.HOUR_OF_DAY, hours);
             calendar.set(Calendar.MINUTE, mins);
             calendar.set(Calendar.SECOND, secs);
+            calendar.set(Calendar.DAY_OF_MONTH,day);
+            calendar.set(Calendar.YEAR,year);
+            calendar.set(Calendar.MONTH,month);
 
             Intent intent = new Intent(context, alarm_receiver.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
