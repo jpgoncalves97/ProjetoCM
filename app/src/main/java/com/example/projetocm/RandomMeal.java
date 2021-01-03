@@ -1,8 +1,10 @@
 package com.example.projetocm;
 
 import android.content.ContentValues;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -44,6 +46,8 @@ public class RandomMeal extends Fragment {
     private FirstFragmentInteractionListener mListener;
     private LayoutInflater objLayoutInflater;
     private Meal[] meal;
+    private ImageView image;
+    private TextView title;
 
     private Database dbhelper;
     private Context context;
@@ -80,20 +84,20 @@ public class RandomMeal extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.random_meal, container, false);
 
-        ImageView image = view.findViewById(R.id.foodpic);
+        image = view.findViewById(R.id.foodpic);
         ImageButton reject = view.findViewById(R.id.rejectButton);
         ImageButton accept = view.findViewById(R.id.acceptButton);
 
-        TextView title = view.findViewById(R.id.mealname);
+        title = view.findViewById(R.id.mealname);
 
 
-        new randomMeal(image, title,0).execute();
+        new randomMeal(meal, image, title).execute();
 
 
         reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new randomMeal(image, title,-1).execute();
+                show_reject_dialog();
             }
         });
         accept.setOnClickListener(new View.OnClickListener() {
@@ -115,9 +119,49 @@ public class RandomMeal extends Fragment {
 
         return view;
     }
+    public void show_reject_dialog(){
 
-    public interface OnTaskCompleted{
-        void onTaskCompleted(Meal[] from_async);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Select a reason")
+
+                .setSingleChoiceItems(R.array.choices, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+
+                })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
+                        Toast.makeText(getContext(),"selectedPosition: " + selectedPosition,Toast.LENGTH_SHORT).show();
+                        if (selectedPosition == 0){
+                            //Not right now - simply fetch new random meal
+                            new randomMeal(meal, image, title).execute();
+                        }
+                        else if(selectedPosition == 1){
+                            //Don't like it - fetch new random meal and modify database for displayed meal
+                            new randomMeal(meal, image, title).execute();
+                        }
+                        else if(selectedPosition == 2){
+                            //Missing ingredients - Open schedule shopping screen
+
+                        }
+
+                    }
+                })
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // removes the dialog from the screen
+
+                    }
+                })
+
+                .show();
+
     }
 
     @Override

@@ -9,11 +9,16 @@
 
 
     <com.bosphere.fadingedgelayout.FadingEdgeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="200dp"
+        android:id="@+id/fadingEdgeLayout"
+        android:layout_width="416dp"
+        android:layout_height="466dp"
         app:fel_edge="bottom"
-        >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/foodpic"
@@ -29,7 +34,6 @@
             tools:srcCompat="@tools:sample/avatars" />
 
     </com.bosphere.fadingedgelayout.FadingEdgeLayout>
-
 
     <ImageButton
         android:id="@+id/acceptButton"
@@ -62,19 +66,31 @@
 
     <TextView
         android:id="@+id/mealname"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="414dp"
+        android:layout_height="130dp"
         android:fontFamily="@font/muli"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="#353535"
+        android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.765" />
+        app:layout_constraintVertical_bias="0.815" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="113dp"
+        android:layout_height="38dp"
+        android:alpha="0.6"
+        android:src="@drawable/sel_fragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.894" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,4 +15,10 @@
     <string name="searchMealHint">Type your search here</string>
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Closed</string>
+
+    <string-array name="choices">
+        <item>Not right now</item>
+        <item>Don\'t like it</item>
+        <item>Missing ingredients</item>
+    </string-array>
 </resources>
