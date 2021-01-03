@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projetocm.OnSwipeTouchListener;
+import com.example.projetocm.R;
+
 import java.io.InputStream;
 
 /**
@@ -73,7 +76,7 @@ public class QuickAccess extends Fragment {
 
         TextView title = view.findViewById(R.id.mealname);
         title.setText(mParam1);
-        new DownloadImageTask(image).execute(mParam2);
+        new DownloadImage(image).execute(mParam2);
 
 
         web.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +90,7 @@ public class QuickAccess extends Fragment {
             }
         });
 
-        image.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+        view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeRight() {
                 Toast.makeText(getContext(), "right", Toast.LENGTH_SHORT).show();
                 mListener.SecondFragmentInteraction();
@@ -122,6 +125,30 @@ public class QuickAccess extends Fragment {
         void SecondFragmentInteraction();
     }
 
+    class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImage(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
 
 }
 

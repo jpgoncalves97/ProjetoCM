@@ -145,10 +145,12 @@ public class SearchResults extends Fragment {
             //how to return a value to the calling method
             meal = result;
             title.setText(meal[0].name);
-            new DownloadImageTask(image)
+            new RandomMeal.DownloadImageTask(image)
                     .execute(meal[0].image);
             System.out.println(meal[0].id);
         }
     }
+
+
 
 }

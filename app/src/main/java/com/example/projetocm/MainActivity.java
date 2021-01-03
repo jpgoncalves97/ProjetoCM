@@ -22,24 +22,49 @@ import com.google.android.material.navigation.NavigationView;
 
 
 
-public class MainActivity extends AppCompatActivity implements RandomMeal.FirstFragmentInteractionListener, QuickAccess.SecondFragmentInteractionListener,
-        NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements
+        RandomMeal.FirstFragmentInteractionListener,
+        QuickAccess.SecondFragmentInteractionListener,
+        NavigationView.OnNavigationItemSelectedListener,
+        Meal_Details.DetailFragmentListener{
 
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
+
+    private Database dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        dbHelper = new Database(getApplicationContext());
+
         setupDrawer();
 
-        RandomMeal randomMeal = RandomMeal.newInstance();
+        RandomMeal randomMeal = RandomMeal.newInstance(dbHelper, MainActivity.this);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, randomMeal, "fragOne");
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void FirstFragmentInteraction(Meal meal, int status) {
+        if(status == 0) {
+            QuickAccess quickAccess = QuickAccess.newInstance(meal);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+            fragmentTransaction.replace(R.id.fragment_container, quickAccess, "fragTwo");
+            fragmentTransaction.addToBackStack("Top");
+            fragmentTransaction.commit();
+        }else if(status == 1){
+            Meal_Details fragment = Meal_Details.newInstance(meal);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment, "fragdetails");
+            //fragmentTransaction.addToBackStack("Top");
+            fragmentTransaction.commit();
+        }
     }
 
     public void setupDrawer(){
@@ -60,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements RandomMeal.FirstF
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_random) {
-            RandomMeal randomMeal = RandomMeal.newInstance();
+            RandomMeal randomMeal = RandomMeal.newInstance(dbHelper, MainActivity.this);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, randomMeal, "fragOne");
             fragmentTransaction.commit();
@@ -88,12 +113,8 @@ public class MainActivity extends AppCompatActivity implements RandomMeal.FirstF
     }
 
     @Override
-    public void FirstFragmentInteraction(Meal meal) {
-        QuickAccess fragmentTwo = QuickAccess.newInstance(meal);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_activity , fragmentTwo, "fragTwo");
-        fragmentTransaction.addToBackStack("Top");
-        fragmentTransaction.commit();
+    public void DetailFragmentInteraction(int function) {
+
     }
 
     public void SecondFragmentInteraction() {

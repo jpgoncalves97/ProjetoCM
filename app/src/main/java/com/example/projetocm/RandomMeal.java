@@ -1,14 +1,16 @@
 package com.example.projetocm;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,14 +45,19 @@ public class RandomMeal extends Fragment {
     private LayoutInflater objLayoutInflater;
     private Meal[] meal;
 
+    private Database dbhelper;
+    private Context context;
+
+    public RandomMeal(Database dbhelper, Context context) {
+        this.dbhelper = dbhelper;
+        this.context = context;
+    }
 
 
     // TODO: Rename and change types and number of parameters
-    public static RandomMeal newInstance(){
-        RandomMeal fragment = new RandomMeal();
+    public static RandomMeal newInstance(Database dbhelper, Context context){
+        RandomMeal fragment = new RandomMeal(dbhelper,context);
         Bundle args = new Bundle();
-        //#args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,19 +87,20 @@ public class RandomMeal extends Fragment {
         TextView title = view.findViewById(R.id.mealname);
 
 
-        new randomMeal(meal, image, title).execute();
+        new randomMeal(image, title,0).execute();
 
 
         reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new randomMeal(meal, image, title).execute();
+                new randomMeal(image, title,-1).execute();
             }
         });
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new randomMeal(meal, image, title).execute();
+
+                mListener.FirstFragmentInteraction(meal[0],1);
             }
         });
 
@@ -98,9 +108,10 @@ public class RandomMeal extends Fragment {
             public void onSwipeLeft() {
                 Toast.makeText(getContext(), "left", Toast.LENGTH_SHORT).show();
                 System.out.println(meal[0].name);
-                mListener.FirstFragmentInteraction(meal[0]);
+                mListener.FirstFragmentInteraction(meal[0],0);
             }
         });
+
 
         return view;
     }
@@ -130,28 +141,25 @@ public class RandomMeal extends Fragment {
 
 
     public interface FirstFragmentInteractionListener {
-        void FirstFragmentInteraction(Meal meal);
+        void FirstFragmentInteraction(Meal meal,int status);
     }
 
     class randomMeal extends AsyncTask<String, Void, Meal[]> {
         ImageView image;
         TextView title;
+        int status;
 
 
-        public randomMeal(Meal[] meal, ImageView image, TextView title) {
+        public randomMeal(ImageView image, TextView title, int status) {
             this.image = image;
             this.title = title;
+            this.status = status;
         }
 
         @Override
         protected Meal[] doInBackground(String... args) {
-            try {
-                Meal[] meals = API.randomMeal();
-                return meals;
-            } catch (NullPointerException e){
-                System.out.println("Cant find in API");
-            }
-            return null;
+            Meal[] meals = API.randomMeal();
+            return meals;
         }
 
         @Override
@@ -163,33 +171,40 @@ public class RandomMeal extends Fragment {
             new DownloadImageTask(image)
                     .execute(meal[0].image);
             System.out.println(meal[0].id);
+
+            dbhelper.add_meal(meal[0],status);
+
+            dbhelper.check_meal_status(meal[0].id);
+
+            dbhelper.get_meals();
+        }
+    }
+
+    static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 
 }
 
 
-class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
-
-    public DownloadImageTask(ImageView bmImage) {
-        this.bmImage = bmImage;
-    }
-
-    protected Bitmap doInBackground(String... urls) {
-        String urldisplay = urls[0];
-        Bitmap mIcon11 = null;
-        try {
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
-        }
-        return mIcon11;
-    }
-
-    protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
-    }
-}
