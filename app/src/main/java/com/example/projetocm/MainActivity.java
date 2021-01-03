@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements
 
         dbHelper = new Database(getApplicationContext());
 
+        //alarm_receiver.setAlarm(MainActivity.this,22,0,0);
+
         setupDrawer();
 
         RandomMeal randomMeal = RandomMeal.newInstance(dbHelper, MainActivity.this);
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
             fragmentTransaction.add(R.id.fragment_container, quickAccess, "fragTwo");
-            fragmentTransaction.addToBackStack("Top");
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }else if(status == 1){
             Meal_Details fragment = Meal_Details.newInstance(meal);

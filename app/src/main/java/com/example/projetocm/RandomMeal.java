@@ -102,8 +102,8 @@ public class RandomMeal extends Fragment {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mListener.FirstFragmentInteraction(meal[0],1);
+                if(meal != null)
+                    mListener.FirstFragmentInteraction(meal[0],1);
             }
         });
 

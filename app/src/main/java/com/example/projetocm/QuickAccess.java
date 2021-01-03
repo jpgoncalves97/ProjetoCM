@@ -106,7 +106,7 @@ public class QuickAccess extends Fragment {
         TextView tv_ing = view.findViewById(R.id.tv_ing);
         tv_ing.setText(ingredients);
 
-        new DownloadImage(image).execute(imageLink);
+        //new DownloadImage(image).execute(imageLink);
 
 
         web.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +126,7 @@ public class QuickAccess extends Fragment {
             }
         });
 
-        image.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+        view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeRight() {
                 mListener.SecondFragmentInteraction();
             }

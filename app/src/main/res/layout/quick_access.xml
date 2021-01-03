@@ -7,6 +7,18 @@
     tools:context=".fragments.RandomMeal"
     android:id = "@+id/first_fragment">
 
+    <ImageView
+        android:id="@+id/white_bck"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/whitesquare"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -20,6 +32,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.894" />
+
+
 
     <com.bosphere.fadingedgelayout.FadingEdgeLayout
         android:id="@+id/fadingEdgeLayout"
@@ -38,7 +52,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scaleType="centerCrop"
-            android:alpha="0.3"
+            android:alpha="0.5"
+            android:src="@drawable/whitesquare"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -114,6 +129,7 @@
         app:layout_constraintVertical_bias="0.172" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="304dp"
         android:layout_height="285dp"
         app:layout_constraintBottom_toBottomOf="parent"
