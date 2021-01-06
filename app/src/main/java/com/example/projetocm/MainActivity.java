@@ -124,7 +124,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void HistoryFragmentInteraction() {
+    public void HistoryFragmentInteraction(Meal meal) {
+        Meal_Details fragment = Meal_Details.newInstance(meal);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment, "fragdetails");
+        fragmentTransaction.addToBackStack("Top");
+        fragmentTransaction.commit();
     }
 
     public void SecondFragmentInteraction() {

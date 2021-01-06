@@ -1,6 +1,7 @@
 package com.example.projetocm;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -67,16 +68,15 @@ public class PastMeals extends Fragment {
         mealView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id_) {
-                //String title = (String) parent.getAdapter().getItem(position);
-                //String id = getIdByTitle(title);
-                //mListener.HistoryFragmentInteraction(id);
+                String title = (String) parent.getAdapter().getItem(position);
+                new searchMeal().execute(title);
             }
         });
         return view;
     }
 
     public interface HistoryFragmentInteractionListener {
-        void HistoryFragmentInteraction();
+        void HistoryFragmentInteraction(Meal meal);
     }
 
     @Override
@@ -96,5 +96,28 @@ public class PastMeals extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    class searchMeal extends AsyncTask<String, Void, Meal> {
+        int liked;
+
+        public searchMeal() {
+        }
+
+
+        @Override
+        protected Meal doInBackground(String... args) {
+            String title = args[0];
+            title = title.replace(" ", "_");
+            Meal[] meals = API.searchMealByName(title);
+            return meals[0];
+        }
+
+        @Override
+        protected void onPostExecute(Meal result) {
+            //do stuff
+            //how to return a value to the calling method
+            mListener.HistoryFragmentInteraction(result);
+        }
     }
 }
