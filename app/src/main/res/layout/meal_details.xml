@@ -28,22 +28,31 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:scaleType="fitXY"
-                android:id="@+id/shopping_button"
-                android:background="#00000000"
-                android:src="@drawable/shopping_cart"/>
 
             <ImageButton
+                android:id="@+id/back_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:scaleType="fitXY"
-                android:id="@+id/save_button"
                 android:background="#00000000"
-                android:src="@drawable/save"
-                />
+                android:scaleType="fitXY"
+                android:src="@drawable/backbutton" />
+
+            <ImageButton
+                android:id="@+id/shopping_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:scaleType="fitXY"
+                android:src="@drawable/shopbutton" />
+
+            <ImageButton
+                android:id="@+id/save_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#00000000"
+                android:scaleType="fitXY"
+                android:src="@drawable/savebutton" />
         </LinearLayout>
 
         <ImageView
@@ -72,7 +81,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/muli"
             android:text="Lorem ipsum dolor sit amet, coneeeeeeeeeeeeeeeeeeeeeeeeeeeesectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            android:textAlignment="center"
+            android:textAlignment="gravity"
             android:textColor="#353535"
             android:textSize="20sp"
             android:textStyle="normal" />
@@ -95,7 +104,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/muli"
             android:text="Lorem ipsum dolor sit amet, consecteeeeeeeeeeeeeeeeeeeeeeeeetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            android:textAlignment="center"
+            android:textAlignment="gravity"
             android:textColor="#353535"
             android:textSize="20sp"
             android:textStyle="normal" />

@@ -126,7 +126,7 @@ public class QuickAccess extends Fragment {
             }
         });
 
-        image.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+        view.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeRight() {
                 mListener.SecondFragmentInteraction();
             }

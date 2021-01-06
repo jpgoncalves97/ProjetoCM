@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements
             Meal_Details fragment = Meal_Details.newInstance(meal);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment, "fragdetails");
-            //fragmentTransaction.addToBackStack("Top");
+            fragmentTransaction.addToBackStack("Top");
             fragmentTransaction.commit();
         }
     }
@@ -113,8 +113,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void DetailFragmentInteraction(int function) {
-
+    public void DetailFragmentInteraction() {
+        RandomMeal fragmentOne = (RandomMeal) getSupportFragmentManager().findFragmentByTag("fragOne");
+        getSupportFragmentManager().popBackStack();
     }
 
     public void SecondFragmentInteraction() {
