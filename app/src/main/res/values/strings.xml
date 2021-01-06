@@ -2,6 +2,9 @@
     <string name="app_name">ProjetoCM</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="searchMealHint">Type your search here</string>
+    <string name="navigation_drawer_open">Drawer Open</string>
+    <string name="navigation_drawer_close">Drawer Closed</string>
     <string-array name="json_options">
         <item>meal name</item>
         <item>meal id</item>
@@ -12,9 +15,6 @@
         <item>filter category</item>
         <item>filter area</item>
     </string-array>
-    <string name="searchMealHint">Type your search here</string>
-    <string name="navigation_drawer_open">Drawer Open</string>
-    <string name="navigation_drawer_close">Drawer Closed</string>
 
     <string-array name="choices">
         <item>Not right now</item>

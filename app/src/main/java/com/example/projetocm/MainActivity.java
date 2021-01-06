@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity implements
         RandomMeal.FirstFragmentInteractionListener,
         QuickAccess.SecondFragmentInteractionListener,
         NavigationView.OnNavigationItemSelectedListener,
-        Meal_Details.DetailFragmentListener{
+        Meal_Details.DetailFragmentListener,
+        PastMeals.HistoryFragmentInteractionListener{
 
 
     private DrawerLayout drawer;
@@ -93,6 +94,10 @@ public class MainActivity extends AppCompatActivity implements
         } else if (id == R.id.nav_pref) {
 
         } else if (id == R.id.nav_past) {
+            PastMeals mealHistory = PastMeals.newInstance(dbHelper);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, mealHistory, "fragMealHist");
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_search_name) {
             System.out.println("Search meal name");
@@ -116,6 +121,10 @@ public class MainActivity extends AppCompatActivity implements
     public void DetailFragmentInteraction() {
         RandomMeal fragmentOne = (RandomMeal) getSupportFragmentManager().findFragmentByTag("fragOne");
         getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void HistoryFragmentInteraction() {
     }
 
     public void SecondFragmentInteraction() {

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.provider.BaseColumns;
 import android.util.Log;
+import android.widget.SimpleCursorAdapter;
 
 import org.json.JSONObject;
 
@@ -137,6 +138,29 @@ public class Database extends SQLiteOpenHelper {
             Log.d("db_debug", cursor.getString(cursor.getColumnIndexOrThrow("name")));
         }
         cursor.close();
+
+
+    }
+
+    public ArrayList<String> populateListView(){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ArrayList<String> meals = new ArrayList<String>();
+
+        Cursor cursor = db.query(
+                TABLE_NAMES[0],   // The table to query
+                null,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                  // don't filter by row groups
+                null              // The sort order
+        );
+        while(cursor.moveToNext()) {
+            Log.d("db_debug", cursor.getString(cursor.getColumnIndexOrThrow("name")));
+            meals.add(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+        }
+        return meals;
 
     }
 
