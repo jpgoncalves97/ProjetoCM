@@ -71,11 +71,6 @@ public class RandomMeal extends Fragment {
         super.onCreate(savedInstanceState);
         objLayoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
         new randomMeal(0).execute();
     }
 
@@ -102,8 +97,8 @@ public class RandomMeal extends Fragment {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mListener.FirstFragmentInteraction(meal[0],1);
+                if(meal != null)
+                    mListener.FirstFragmentInteraction(meal[0],1);
             }
         });
 
@@ -145,7 +140,8 @@ public class RandomMeal extends Fragment {
                         }
                         else if(selectedPosition == 2){
                             //Missing ingredients - Open schedule shopping screen
-
+                            if (meal != null)
+                                mListener.FirstFragmentInteraction(meal[0],2); //goto shop_frag
                         }
 
                     }

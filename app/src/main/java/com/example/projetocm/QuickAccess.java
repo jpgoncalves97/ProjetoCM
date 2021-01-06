@@ -106,7 +106,7 @@ public class QuickAccess extends Fragment {
         TextView tv_ing = view.findViewById(R.id.tv_ing);
         tv_ing.setText(ingredients);
 
-        new DownloadImage(image).execute(imageLink);
+        //new DownloadImage(image).execute(imageLink);
 
 
         web.setOnClickListener(new View.OnClickListener() {
