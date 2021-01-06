@@ -33,6 +33,7 @@
                 android:id="@+id/back_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_weight="0"
                 android:background="#00000000"
                 android:scaleType="fitXY"
                 android:src="@drawable/backbutton" />
@@ -41,18 +42,11 @@
                 android:id="@+id/shopping_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:background="#00000000"
                 android:scaleType="fitXY"
                 android:src="@drawable/shopbutton" />
 
-            <ImageButton
-                android:id="@+id/save_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="#00000000"
-                android:scaleType="fitXY"
-                android:src="@drawable/savebutton" />
         </LinearLayout>
 
         <ImageView
