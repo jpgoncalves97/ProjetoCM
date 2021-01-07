@@ -33,8 +33,8 @@ public class alarm_receiver extends BroadcastReceiver {
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context, "shop_notification")
                             .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentTitle("time to buy some food")
-                            .setContentText("dont forget to buy food!!!!");
+                            .setContentTitle("Notification to buy food")
+                            .setContentText("dont forget to buy food!");
             mBuilder.setPriority(NotificationCompat.PRIORITY_MAX);
             mBuilder.setAutoCancel(true);
 
@@ -44,10 +44,10 @@ public class alarm_receiver extends BroadcastReceiver {
 
             PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(2, PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(resultPendingIntent);
-
+            int random = (int)System.currentTimeMillis();
             NotificationManager mNotificationManager = (NotificationManager)
                     context.getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(1, mBuilder.build());
+            mNotificationManager.notify(random, mBuilder.build());
 
         }
     }

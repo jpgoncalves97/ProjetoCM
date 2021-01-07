@@ -52,7 +52,9 @@ public class shop_frag extends Fragment {
         donebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "notification created at "+ dp.getYear() + "/" +dp.getMonth() + "/" +dp.getDayOfMonth() + ":" + tp.getHour() + ":" +tp.getMinute() , Toast.LENGTH_LONG).show();
                 alarm_receiver.setAlarm(context,dp.getYear(),dp.getMonth(),dp.getDayOfMonth(),tp.getHour(),tp.getMinute(),0);
+                mListener.shopfraginteraction();
             }
         });
 

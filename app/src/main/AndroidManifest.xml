@@ -24,7 +24,7 @@
             android:name="alarm_receiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.example.projetocm.shop_alarm" />
+                <action android:name="com.example.projetocm.alarm_receiver" />
             </intent-filter>
         </receiver>
     </application>

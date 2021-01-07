@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity implements
 
         dbHelper = new Database(getApplicationContext());
 
-        alarm_receiver.setAlarm(getApplicationContext(), 2021,1,7,0,12,0);
-
         setupDrawer();
 
         RandomMeal randomMeal = RandomMeal.newInstance(dbHelper, MainActivity.this);
@@ -136,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void shopfraginteraction() {
-
+        getSupportFragmentManager().popBackStack();
     }
 
     @Override
