@@ -104,7 +104,9 @@ public class RandomMeal extends Fragment {
             @Override
             public void onClick(View v) {
                 if(meal != null) {
-                    dbhelper.add_meal(meal[0], 0);
+                    if (dbhelper.search_name(meal[0].name, "meals").size() == 0) {
+                        dbhelper.add_meal(meal[0], 0);
+                    }
                     mListener.FirstFragmentInteraction(meal[0], 1);
                 }
             }
@@ -201,7 +203,10 @@ public class RandomMeal extends Fragment {
 
         @Override
         protected Meal[] doInBackground(String... args) {
-            Meal[] meals = API.randomMeal();
+            Meal[] meals;
+            do {
+                meals = API.randomMeal();
+            } while (dbhelper.search_name(meals[0].name, "meals").size() != 0);
             return meals;
         }
 

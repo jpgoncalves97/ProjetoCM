@@ -65,30 +65,26 @@ public class MainActivity extends AppCompatActivity implements
             fragmentTransaction.addToBackStack("Top");
             fragmentTransaction.commit();
         }else if(status == 1){
+            changeFragment(Meal_Details.newInstance(meal), "fragdetails");
+/*
             Meal_Details fragment = Meal_Details.newInstance(meal);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment, "fragdetails");
             fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
         }else if (status == 2){
-            shop_frag fragment = shop_frag.newInstance(meal,dbHelper, MainActivity.this);
+            changeFragment(shop_frag.newInstance(meal,dbHelper, MainActivity.this), "fragshop");
+            /*shop_frag fragment = shop_frag.newInstance(meal,dbHelper, MainActivity.this)
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment, "fragshop");
             fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
         }
     }
 
     public void setupDrawer(){
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
         drawer = findViewById(R.id.main_activity);
         navigationView = findViewById(R.id.nav_view);
-        /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();*/
-
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -98,8 +94,6 @@ public class MainActivity extends AppCompatActivity implements
         int id = item.getItemId();
         if (id == R.id.nav_random) {
             changeFragment(RandomMeal.newInstance(dbHelper, MainActivity.this), "fragRandom");
-        } else if (id == R.id.nav_pref) {
-
         } else if (id == R.id.nav_past) {
             changeFragment(PastMeals.newInstance(dbHelper), "fragMealHist");
         } else if (id == R.id.nav_search_name) {

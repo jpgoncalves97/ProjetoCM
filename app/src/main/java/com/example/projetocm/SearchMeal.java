@@ -113,30 +113,29 @@ public class SearchMeal extends Fragment {
         void SearchMealFragmentInteraction(Meal meal);
     }
 
-
     class Task extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String... args) {
-            try {
-                switch (mSearchType){
-                    case "name":
-                        meals = API.searchMealByName(args[1]);
-                        break;
-                    case "category":
-                        meals = API.filterByCategory(args[1]);
-                        break;
-                    case "ingredient":
-                        meals = API.filterByIngredient(args[1]);
-                        break;
-                    case "area":
-                        meals = API.filterByArea(args[1]);
-                        break;
+
+            switch (mSearchType){
+                case "name":
+                    meals = API.searchMealByName(args[1]);
+                    break;
+                case "category":
+                    meals = API.filterByCategory(args[1]);
+                    break;
+                case "ingredient":
+                    meals = API.filterByIngredient(args[1]);
+                    break;
+                case "area":
+                    meals = API.filterByArea(args[1]);
+                    break;
+            }
+             if (!mSearchType.equals("name") && meals != null) {
+                for (int i = 0; i < meals.length; i++) {
+                    meals[i] = API.searchMealById(meals[i].id);
                 }
-                if (!mSearchType.equals("name"))
-                    for (int i = 0; i < meals.length; i++){
-                        meals[i] = API.searchMealById(meals[i].id);
-                    }
                 for (Meal meal: meals){
                     meal.print();
                 }
@@ -144,8 +143,6 @@ public class SearchMeal extends Fragment {
                 for (Meal meal: meals){
                     searchItems.add(meal.name);
                 }
-            } catch (NullPointerException e){
-                System.out.println("Cant find in API");
             }
             return null;
         }

@@ -7,9 +7,6 @@
             android:id="@+id/nav_random"
             android:title="Random Recipe" />
         <item
-            android:id="@+id/nav_pref"
-            android:title="Preferences" />
-        <item
             android:id="@+id/nav_past"
             android:title="Past Meals" />
     </group>
