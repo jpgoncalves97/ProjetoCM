@@ -103,8 +103,10 @@ public class RandomMeal extends Fragment {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(meal != null)
-                    mListener.FirstFragmentInteraction(meal[0],1);
+                if(meal != null) {
+                    dbhelper.add_meal(meal[0], 0);
+                    mListener.FirstFragmentInteraction(meal[0], 1);
+                }
             }
         });
 
@@ -213,11 +215,6 @@ public class RandomMeal extends Fragment {
                     .execute(meal[0].image);
             System.out.println(meal[0].id);
 
-            dbhelper.add_meal(meal[0],liked);
-
-            dbhelper.check_meal_status(meal[0].id);
-
-            dbhelper.get_meals();
         }
     }
 
