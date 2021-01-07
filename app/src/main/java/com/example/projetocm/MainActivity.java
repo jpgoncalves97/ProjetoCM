@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -28,8 +29,7 @@ public class MainActivity extends AppCompatActivity implements
         QuickAccess.SecondFragmentInteractionListener,
         NavigationView.OnNavigationItemSelectedListener,
         Meal_Details.DetailFragmentListener,
-        shop_frag.shopfraglistener{
-        Meal_Details.DetailFragmentListener,
+        shop_frag.shopfraglistener,
         PastMeals.HistoryFragmentInteractionListener{
 
 
@@ -45,13 +45,13 @@ public class MainActivity extends AppCompatActivity implements
 
         dbHelper = new Database(getApplicationContext());
 
-        //alarm_receiver.setAlarm(MainActivity.this,22,0,0);
+        alarm_receiver.setAlarm(getApplicationContext(), 2021,1,7,0,12,0);
 
         setupDrawer();
 
         RandomMeal randomMeal = RandomMeal.newInstance(dbHelper, MainActivity.this);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, randomMeal, "fragOne");
+        fragmentTransaction.replace(R.id.fragment_container, randomMeal, "fragRandom");
         fragmentTransaction.commit();
     }
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements
             QuickAccess quickAccess = QuickAccess.newInstance(meal);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
-            fragmentTransaction.add(R.id.fragment_container, quickAccess, "fragTwo");
+            fragmentTransaction.add(R.id.fragment_container, quickAccess, "fragQuick");
             fragmentTransaction.addToBackStack("Top");
             fragmentTransaction.commit();
         }else if(status == 1){
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements
         if (id == R.id.nav_random) {
             RandomMeal randomMeal = RandomMeal.newInstance(dbHelper, MainActivity.this);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, randomMeal, "fragOne");
+            fragmentTransaction.replace(R.id.fragment_container, randomMeal, "fragRandom");
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_pref) {
@@ -130,8 +130,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void DetailFragmentInteraction() {
-        RandomMeal fragmentOne = (RandomMeal) getSupportFragmentManager().findFragmentByTag("fragOne");
-        getSupportFragmentManager().popBackStack();
+        shop_frag fragment = shop_frag.newInstance(null ,dbHelper, MainActivity.this);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment, "fragshop");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
     }
 
     @Override
@@ -144,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void SecondFragmentInteraction() {
-        RandomMeal fragmentOne = (RandomMeal) getSupportFragmentManager().findFragmentByTag("fragOne");
+        RandomMeal fragmentOne = (RandomMeal) getSupportFragmentManager().findFragmentByTag("fragRandom");
         getSupportFragmentManager().popBackStack();
     }
 

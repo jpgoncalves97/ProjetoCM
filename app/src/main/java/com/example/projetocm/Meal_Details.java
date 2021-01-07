@@ -90,6 +90,13 @@ public class Meal_Details extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+        ImageButton shop = view.findViewById(R.id.shopping_button);
+        shop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 mListener.DetailFragmentInteraction();
             }
         });

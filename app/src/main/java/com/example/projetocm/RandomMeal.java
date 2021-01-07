@@ -82,11 +82,17 @@ public class RandomMeal extends Fragment {
         View view = inflater.inflate(R.layout.random_meal, container, false);
 
         image = view.findViewById(R.id.foodpic);
+
         ImageButton reject = view.findViewById(R.id.rejectButton);
         ImageButton accept = view.findViewById(R.id.acceptButton);
 
         title = view.findViewById(R.id.mealname);
 
+        if (meal != null){
+            title.setText(meal[0].name);
+            new DownloadImageTask(image)
+                    .execute(meal[0].image);
+        }
 
         reject.setOnClickListener(new View.OnClickListener() {
             @Override
