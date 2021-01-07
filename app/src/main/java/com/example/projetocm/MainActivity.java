@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         Meal_Details.DetailFragmentListener,
         shop_frag.shopfraglistener,
-        PastMeals.HistoryFragmentInteractionListener{
+        PastMeals.HistoryFragmentInteractionListener,
+        SearchMeal.SearchMealFragmentInteractionListener{
 
 
     private DrawerLayout drawer;
@@ -97,32 +99,19 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_random) {
-            RandomMeal randomMeal = RandomMeal.newInstance(dbHelper, MainActivity.this);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, randomMeal, "fragRandom");
-            fragmentTransaction.commit();
-
+            changeFragment(RandomMeal.newInstance(dbHelper, MainActivity.this), "fragRandom");
         } else if (id == R.id.nav_pref) {
 
         } else if (id == R.id.nav_past) {
-            PastMeals mealHistory = PastMeals.newInstance(dbHelper);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, mealHistory, "fragMealHist");
-            fragmentTransaction.commit();
-
+            changeFragment(PastMeals.newInstance(dbHelper), "fragMealHist");
         } else if (id == R.id.nav_search_name) {
-            System.out.println("Search meal name");
-            SearchMeal searchMeal = SearchMeal.newInstance("meal");
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, searchMeal, "fragSearchMeal");
-            fragmentTransaction.commit();
-
+            changeFragment(SearchMeal.newInstance("name"), "fragSearchMeal");
         } else if (id == R.id.nav_search_cat) {
-
+            changeFragment(SearchMeal.newInstance("category"), "fragSearchCategory");
         } else if (id == R.id.nav_search_ing) {
-
+            changeFragment(SearchMeal.newInstance("ingredient"), "fragSearchIngredient");
         } else if (id == R.id.nav_search_zone) {
-
+            changeFragment(SearchMeal.newInstance("area"), "fragSearchArea");
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -131,20 +120,13 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void DetailFragmentInteraction() {
         shop_frag fragment = shop_frag.newInstance(null ,dbHelper, MainActivity.this);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment, "fragshop");
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-
+        changeFragment(fragment, "fragshop");
     }
 
     @Override
     public void HistoryFragmentInteraction(Meal meal) {
         Meal_Details fragment = Meal_Details.newInstance(meal);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment, "fragdetails");
-        fragmentTransaction.addToBackStack("Top");
-        fragmentTransaction.commit();
+        changeFragment(fragment, "fragdetails");
     }
 
     public void SecondFragmentInteraction() {
@@ -155,6 +137,12 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void shopfraginteraction() {
 
+    }
+
+    @Override
+    public void SearchMealFragmentInteraction(Meal meal) {
+        Meal_Details fragment = Meal_Details.newInstance(meal);
+        changeFragment(fragment, "meal_details");
     }
 
     @Override
@@ -172,5 +160,10 @@ public class MainActivity extends AppCompatActivity implements
                         InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-
+    public void changeFragment(Fragment fragment, String name){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment, name);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 }

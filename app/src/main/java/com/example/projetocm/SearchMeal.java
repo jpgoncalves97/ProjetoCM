@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class SearchMeal extends Fragment {
     private Meal[] meals;
     private ArrayList<String> searchItems = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapter;
+    private SearchMeal.SearchMealFragmentInteractionListener mListener;
 
     public static SearchMeal newInstance(String searchType){
         SearchMeal fragment = new SearchMeal();
@@ -71,14 +74,43 @@ public class SearchMeal extends Fragment {
             @Override
             public void onClick(View v) {
                 String text = searchText.getText().toString().replaceAll("[ ]+", "_");
-                new Task().execute(text);
+                new Task().execute(mSearchType, text);
                 ((MainActivity) getActivity()).hideKeyboard();
                 searchText.clearFocus();
             }
         });
 
-
+        searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mListener.SearchMealFragmentInteraction(meals[position]);
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof PastMeals.HistoryFragmentInteractionListener) {
+            // This will initialize the variable. It will return an exception if it is not
+            //  implemented in the java code of the variable context (in our case the
+            //  context is the MainActivity.
+            mListener = (SearchMeal.SearchMealFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface SearchMealFragmentInteractionListener{
+        void SearchMealFragmentInteraction(Meal meal);
     }
 
 
@@ -87,7 +119,24 @@ public class SearchMeal extends Fragment {
         @Override
         protected Void doInBackground(String... args) {
             try {
-                meals = API.searchMealByName(args[0]);
+                switch (mSearchType){
+                    case "name":
+                        meals = API.searchMealByName(args[1]);
+                        break;
+                    case "category":
+                        meals = API.filterByCategory(args[1]);
+                        break;
+                    case "ingredient":
+                        meals = API.filterByIngredient(args[1]);
+                        break;
+                    case "area":
+                        meals = API.filterByArea(args[1]);
+                        break;
+                }
+                if (!mSearchType.equals("name"))
+                    for (int i = 0; i < meals.length; i++){
+                        meals[i] = API.searchMealById(meals[i].id);
+                    }
                 for (Meal meal: meals){
                     meal.print();
                 }
